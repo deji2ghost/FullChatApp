@@ -5,8 +5,14 @@ const Chat = () => {
     const [ chats, setChats ] = useState([])
     const fetchChats = async() => {
       try {
-        const {data} = await axios.get("http://localhost:5000/api/chat")
-        setChats(data)
+        const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MjQ1MGYyNTBlYThlOGI0ZjZiYmUwYSIsImlhdCI6MTc0NzIxMDc4NCwiZXhwIjoxNzQ5ODAyNzg0fQ.40S5dJKJUjPZuntSwLgxUkk7-UpzHikTs4opPzp5ZII`,
+        },
+      };
+        const response = await axios.get("http://localhost:5000/api/user?search=piyush", config)
+        console.log(response)
       } catch (error) {
         console.log(error)
       }
