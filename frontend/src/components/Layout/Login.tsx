@@ -3,10 +3,12 @@ import FormInput from "./InputLabel/FormInput";
 import { Button } from "../ui/button";
 import axios from "axios";
 import { toast } from "sonner";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+import { useGetChat } from "@/context";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { setUser } = useGetChat()
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -36,10 +38,14 @@ const Login = () => {
       const response = await axios.post(`/api/user/login`, formData, config);
       console.log(response)
       if(response.status === 200){
+        setUser(response?.data)
+        localStorage.setItem("userInfo", JSON.stringify(response?.data))
         toast("welcome");
+        setLoading(false);
         navigate("/chats")
       }
     } catch (error) {
+      setLoading(false);
       console.log(error)
     }
   };
@@ -59,7 +65,7 @@ const Login = () => {
       />
       <div>
         <Button>Go back</Button>
-        <Button type="submit">Login</Button>
+        <Button type="submit">{ loading ? "loading" : "Login"}</Button>
       </div>
     </form>
   );
