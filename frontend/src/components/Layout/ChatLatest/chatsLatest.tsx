@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import Custommodal from "../customModal/custommodal";
 
 const ChatsLatest = () => {
-  const { User, latestMessage, allUser, setSearchAllUser } = useGetChat();
+  const { User, latestMessage, allUser, setSearchAllUser, searchAllUser } =
+    useGetChat();
   const [openModal, setOpenModal] = useState(false);
   const fetchChats = async (userId: string) => {
     try {
@@ -26,6 +27,11 @@ const ChatsLatest = () => {
       console.log(error);
     }
   };
+
+  useEffect(() => {
+    console.log(allUser)
+    console.log("searched user", searchAllUser)
+  }, [allUser, searchAllUser]);
 
   const handleCreateGroup = () => {};
 
@@ -66,6 +72,27 @@ const ChatsLatest = () => {
         handleAdd={handleCreateGroup}
         handleCancel={() => setOpenModal(!openModal)}
         open={openModal}
+        body={
+          <>
+            <div>
+              <Input
+                placeholder="search for user"
+                value={searchAllUser}
+                onChange={(e) => setSearchAllUser(e.target.value)}
+              />
+            </div>
+            <div>
+              {
+                allUser.length > 0 ?
+                allUser.map((item) => (
+                  <div key={item._id}>
+                    <h1>{item?.name}</h1>
+                  </div>
+                )) : <p>please enter a valid user name</p>
+              }
+            </div>
+          </>
+        }
         Add="Create Group"
         Cancel="Cancel"
         Header="Create Group"

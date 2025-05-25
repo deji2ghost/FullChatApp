@@ -52,9 +52,10 @@ export const ChatProvider = ({ children }) => {
   useEffect(() => {
     fetchMessages();
   }, []);
+
   useEffect(() => {
     getUsers();
-  }, []);
+  }, [searchAllUser]);
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
@@ -66,7 +67,7 @@ export const ChatProvider = ({ children }) => {
   }, []);
 
   return (
-    <ChatContext.Provider value={{ User, setUser, latestMessage, allUser, setSearchAllUser }}>
+    <ChatContext.Provider value={{ User, setUser, latestMessage, allUser, setSearchAllUser, searchAllUser }}>
       {children}
     </ChatContext.Provider>
   );

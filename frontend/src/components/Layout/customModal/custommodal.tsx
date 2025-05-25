@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { JSX } from "react";
 
 export interface CustomModalProps {
   open: boolean;
@@ -16,6 +17,7 @@ export interface CustomModalProps {
   handleAdd: () => void;
   Header: string;
   headerDescription: string;
+  body: JSX.Element
 }
 
 const Custommodal: React.FC<CustomModalProps> = ({
@@ -26,14 +28,18 @@ const Custommodal: React.FC<CustomModalProps> = ({
   headerDescription,
   handleCancel,
   handleAdd,
+  body
 }) => {
   return (
-    <Dialog open={open}>
+    <Dialog open={open} onOpenChange={handleCancel}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{Header}</DialogTitle>
           <DialogDescription>{headerDescription}</DialogDescription>
         </DialogHeader>
+        <div>
+          { body }
+        </div>
         <DialogFooter className="flex">
           <Button onClick={handleCancel}>{Cancel}</Button>
           <Button onClick={handleAdd}>{Add}</Button>
